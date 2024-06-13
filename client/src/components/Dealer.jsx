@@ -1,15 +1,6 @@
 import { Box, Flex, SimpleGrid } from "@chakra-ui/react"
 import PlayingCard from "./PlayingCard"
 
-const styles = {
-    box: {
-        width: "15rem",
-        height: "15rem",
-        backgroundColor: "white",
-        borderRadius: "",
-    }
-}
-
 function Dealer(props) {
     return (
             <Box bg="grey" borderRadius="20px" width="15rem" height="15rem">

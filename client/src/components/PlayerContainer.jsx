@@ -1,15 +1,6 @@
 import { Box, SimpleGrid } from "@chakra-ui/react"
 import Player from "./Player"
 
-const styles = {
-    box: {
-        width: "60rem",
-        height: "15rem",
-        backgroundColor: "white",
-        borderRadius: "20px",
-    }
-}
-
 function PlayerContainer() {
     return (
         <Box bg="white" borderWidth="15px" borderRadius="20px">

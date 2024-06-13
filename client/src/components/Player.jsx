@@ -1,14 +1,6 @@
 import { Box, Flex, SimpleGrid } from "@chakra-ui/react"
 import PlayingCard from "./PlayingCard"
 
-const styles = {
-    box: {
-        backgroundColor: "violet",
-        height: "150px",
-        width: "150px"
-    }
-}
-
 function Player(props) {
     return (
         <Box bg="grey" borderRadius="20px" minHeight="200px" width="300px">
