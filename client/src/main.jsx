@@ -5,13 +5,18 @@ import './index.css'
 import Title from './components/Title.jsx'
 import Dealer from './components/Dealer.jsx'
 import PlayerContainer from './components/PlayerContainer.jsx'
+import { ChakraProvider, Flex } from '@chakra-ui/react'
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Title />
-    <div className="container-main">
-      <Dealer />
-      <PlayerContainer />
-    </div>
+    <ChakraProvider>
+      <Flex flexDirection="column"
+       alignItems="center" justifyContent="center" gap="2rem">
+        <Title />
+        <Dealer />
+        <PlayerContainer />
+      </Flex>
+    </ChakraProvider>
   </React.StrictMode>,
 )
