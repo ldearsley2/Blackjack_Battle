@@ -1,7 +1,7 @@
 function Title() {
     return (
         <div>
-            <h2>Blackjack Battle</h2>
+            <h1>Blackjack Battle</h1>
         </div>
     )
 }
