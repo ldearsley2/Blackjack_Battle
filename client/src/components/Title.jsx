@@ -1,7 +1,10 @@
+import { Heading } from '@chakra-ui/react'
+
+
 function Title() {
     return (
         <div>
-            <h1>Blackjack Battle</h1>
+            <Heading>Blackjack Battle</Heading>
         </div>
     )
 }

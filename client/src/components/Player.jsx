@@ -1,13 +1,13 @@
-import { Box, Flex, SimpleGrid } from "@chakra-ui/react"
+import { Box, Flex, SimpleGrid, Text } from "@chakra-ui/react"
 import PlayingCard from "./PlayingCard"
 
 function Player(props) {
     return (
-        <Box bg="grey" borderRadius="20px" minHeight="200px" width="300px">
+        <Box bg="RGBA(0, 0, 0, 0.24)" borderRadius="20px" minHeight="200px" width="300px">
             <Flex flexDirection="column" justifyContent="space-between" height="200px">
 
-                <Box bg="blue" borderTopRadius="20px">
-                    {props.playerName}
+                <Box bg="#90CDF4" borderTopRadius="20px" color="black">
+                    <Text>{props.playerName}</Text>
                 </Box>
 
                 <SimpleGrid columns="5" spacing="4" margin="1rem">
@@ -19,11 +19,11 @@ function Player(props) {
                 </SimpleGrid>
 
                 <Box>
-                    <p>Hand total: {props.hand}</p>
+                    <Text>Hand total: {props.hand}</Text>
                 </Box>
 
-                <Box bg="blue" borderBottomRadius="20px">
-                    <p>Points: {props.points}</p>
+                <Box bg="#90CDF4" borderBottomRadius="20px" color="black">
+                    <Text>Points: {props.points}</Text>
                 </Box>
 
             </Flex>

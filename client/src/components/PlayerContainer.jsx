@@ -3,7 +3,7 @@ import Player from "./Player"
 
 function PlayerContainer() {
     return (
-        <Box bg="white" borderWidth="15px" borderRadius="20px">
+        <Box bg="">
             <SimpleGrid columns="3" spacing="10">
                 <Player playerName="p1" hand={15} points={10} />
                 <Player playerName="p2" hand={21} points={10} />
