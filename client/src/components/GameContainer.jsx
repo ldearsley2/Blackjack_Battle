@@ -14,6 +14,10 @@ function GameContainer() {
         console.log('Message from server: ', event.data)
     })
 
+    socket.addEventListener('close', (event) =>{
+        console.log('Closed connection')
+    })
+
     return (
         <Flex flexDirection="column" alignItems="center" gap="40px">
             <Dealer dealerName="dealer1"/>
