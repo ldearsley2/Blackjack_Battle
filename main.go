@@ -32,12 +32,15 @@ import (
 var upgrader = websocket.Upgrader{
 	ReadBufferSize: 1024,
 	WriteBufferSize: 1024,
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
 }
 
 func main() {
+	fmt.Println("Listening on 8080")
 	http.HandleFunc("/ws", wsHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
-	fmt.Println("Listening on 8080")
 }
 
 func wsHandler(w http.ResponseWriter, r *http.Request) {
@@ -47,5 +50,5 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Println("Client connected")
-	conn.Close()
+	fmt.Println(conn)
 }
