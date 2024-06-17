@@ -2,34 +2,50 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/google/uuid"
+	"net/http"
+	"log"
+	// "github.com/google/uuid"
 	"github.com/gorilla/websocket"
 )
 
-type player struct {
-	id string
-	name string
-	points int
-	cards []string
-	isPlaying bool
-	conn *websocket.Conn
-}
+// type player struct {
+// 	id string
+// 	name string
+// 	points int
+// 	cards []string
+// 	isPlaying bool
+// 	conn *websocket.Conn
+// }
 
-func newPlayer(name string, points int, conn *websocket.Conn) *player {
-	client := player{
-		id: uuid.New().String(),
-		name: name,
-		points: points,
-		cards: make([]string, 0),
-		isPlaying: false,
-		conn: conn,
-	}
-	return &client
+// func newPlayer(name string, points int, conn *websocket.Conn) *player {
+// 	client := player{
+// 		id: uuid.New().String(),
+// 		name: name,
+// 		points: points,
+// 		cards: make([]string, 0),
+// 		isPlaying: false,
+// 		conn: conn,
+// 	}
+// 	return &client
+// }
+
+var upgrader = websocket.Upgrader{
+	ReadBufferSize: 1024,
+	WriteBufferSize: 1024,
 }
 
 func main() {
-	fmt.Println("Foobar")
+	http.HandleFunc("/ws", wsHandler)
+	log.Fatal(http.ListenAndServe(":8080", nil))
+	fmt.Println("Listening on 8080")
+}
 
-	
+func wsHandler(w http.ResponseWriter, r *http.Request) {
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	fmt.Println("Client connected")
+	conn.Close()
 }
