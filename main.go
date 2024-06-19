@@ -8,26 +8,26 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-// type player struct {
-// 	id string
-// 	name string
-// 	points int
-// 	cards []string
-// 	isPlaying bool
-// 	conn *websocket.Conn
-// }
+type player struct {
+	id string
+	name string
+	points int
+	cards []string
+	isPlaying bool
+	conn *websocket.Conn
+}
 
-// func newPlayer(name string, points int, conn *websocket.Conn) *player {
-// 	client := player{
-// 		id: uuid.New().String(),
-// 		name: name,
-// 		points: points,
-// 		cards: make([]string, 0),
-// 		isPlaying: false,
-// 		conn: conn,
-// 	}
-// 	return &client
-// }
+func newPlayer(name string, points int, conn *websocket.Conn) *player {
+	client := player{
+		id: uuid.New().String(),
+		name: name,
+		points: points,
+		cards: make([]string, 0),
+		isPlaying: false,
+		conn: conn,
+	}
+	return &client
+}
 
 var upgrader = websocket.Upgrader{
 	ReadBufferSize: 1024,
@@ -49,6 +49,10 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		return
 	}
+
+	connected_users := make([]player, 0)
+	connected_users = append(connected_users, *newPlayer("Test", 0, conn))
+
 
 	defer conn.Close()
 
