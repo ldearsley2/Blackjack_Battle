@@ -1,21 +1,28 @@
 import { Flex } from "@chakra-ui/react";
 import Dealer from "./Dealer";
 import PlayerContainer from "./PlayerContainer";
+import { useEffect, useState } from "react";
 
 function GameContainer() {
+    const [websocket, setWebSocket] = useState(null)
 
-    const socket = new WebSocket('ws://localhost:8080/ws');
+    useEffect(() => {
+        const ws = new WebSocket('ws://localhost:8080/ws')
+        setWebSocket(ws)
+        
+        ws.onopen = () => {
+            console.log('Connected to server')
+            ws.send(JSON.stringify({id: "Frontend"}))
+        }
 
-    socket.addEventListener('open', (event) => {
-        socket.send("Hello server!")
-    })
+        ws.onmessage = (event) => {
+            console.log(event.data)
+        }
 
-    socket.addEventListener('message', (event) => {
-        console.log('Message from server: ', event.data)
-    })
-
-    socket.addEventListener('close', (event) =>{
-        console.log('Closed connection')
+        ws.onclose = () => {
+            console.log('Disconnected from server')
+        }
+    
     })
 
     return (
