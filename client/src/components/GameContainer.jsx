@@ -23,7 +23,7 @@ function GameContainer() {
             console.log('Disconnected from server')
         }
     
-    })
+    }, [])
 
     return (
         <Flex flexDirection="column" alignItems="center" gap="40px">
