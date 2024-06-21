@@ -2,39 +2,48 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-	"log"
-	// "github.com/google/uuid"
 	"github.com/gorilla/websocket"
+	"log"
+	"net/http"
 )
 
-// type player struct {
-// 	id string
-// 	name string
-// 	points int
-// 	cards []string
-// 	isPlaying bool
-// 	conn *websocket.Conn
-// }
+type Server struct {
+	clients    map[*Client]bool
+	frontEnd   *Client
+	register   chan *Client
+	unRegister chan *Client
+	broadcast  chan []byte
+	dealerHand []Card
+	deck       []Card
+}
 
-// func newPlayer(name string, points int, conn *websocket.Conn) *player {
-// 	client := player{
-// 		id: uuid.New().String(),
-// 		name: name,
-// 		points: points,
-// 		cards: make([]string, 0),
-// 		isPlaying: false,
-// 		conn: conn,
-// 	}
-// 	return &client
-// }
+type Client struct {
+	conn       *websocket.Conn
+	clientType string
+	playerHand []Card
+}
+
+type Card struct {
+	Value string `json:"value"`
+	Suit  string `json:"suit"`
+}
 
 var upgrader = websocket.Upgrader{
-	ReadBufferSize: 1024,
+	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 	CheckOrigin: func(r *http.Request) bool {
 		return true
 	},
+}
+
+func createServer() *Server {
+	return &Server{
+		clients:    make(map[*Client]bool),
+		register:   make(chan *Client),
+		unRegister: make(chan *Client),
+		broadcast:  make(chan []byte),
+		deck:       make([]Card, 0),
+	}
 }
 
 func main() {
@@ -52,13 +61,13 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 
 	connected_clients := make([]*websocket.Conn, 0)
 	connected_clients = append(connected_clients, conn)
-
+	fmt.Println(len(connected_clients))
 
 	defer conn.Close()
 
 	for {
 		messageType, message, err := conn.ReadMessage()
-		if err != nil{
+		if err != nil {
 			log.Println(err)
 			return
 		}
@@ -72,3 +81,4 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
+
