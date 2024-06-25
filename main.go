@@ -27,6 +27,8 @@ type Server struct {
 	broadcast   chan []byte
 	gameState   GameState
 	actionMutex sync.Mutex
+	frontEnd *websocket.Conn
+	frontEndMutex sync.Mutex
 }
 
 type Card struct {
@@ -133,7 +135,20 @@ func (s *Server) handleConnections(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s.register <- conn
+	clientType := r.URL.Query().Get("type")
+	if clientType == "frontend" {
+		s.frontEndMutex.Lock()
+		if s.frontEnd != nil {
+			conn.Close()
+			s.frontEndMutex.Unlock()
+			return
+		}
+		s.frontEnd = conn
+		s.frontEndMutex.Unlock()
+	} else {
+		s.register <- conn
+
+	}
 
 	defer func() {
 		s.unRegister <- conn

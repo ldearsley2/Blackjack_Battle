@@ -7,12 +7,11 @@ function GameContainer() {
     const [websocket, setWebSocket] = useState(null)
 
     useEffect(() => {
-        const ws = new WebSocket('ws://localhost:8080/ws')
+        const ws = new WebSocket('ws://localhost:8080/ws?type=frontend')
         setWebSocket(ws)
         
         ws.onopen = () => {
             console.log('Connected to server')
-            ws.send(JSON.stringify({id: "Frontend"}))
         }
 
         ws.onmessage = (event) => {
