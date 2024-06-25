@@ -3,11 +3,12 @@ import Dealer from "./Dealer";
 import PlayerContainer from "./PlayerContainer";
 import { useEffect, useState } from "react";
 
+const ws = new WebSocket('ws://localhost:8080/ws?type=frontend')
+
 function GameContainer() {
     const [websocket, setWebSocket] = useState(null)
 
     useEffect(() => {
-        const ws = new WebSocket('ws://localhost:8080/ws?type=frontend')
         setWebSocket(ws)
         
         ws.onopen = () => {
