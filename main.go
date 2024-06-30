@@ -44,7 +44,7 @@ func createServer() *Server {
 		broadcast:  make(chan []byte),
 		gameState: GameState{
 			Players: make(map[*websocket.Conn]PlayerState),
-			Dealer:  []Card{},
+			Dealer:  createDeck(),
 		},
 	}
 }
@@ -177,6 +177,7 @@ func (s *Server) handleConnections(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	server := createServer()
+	fmt.Println(server.gameState.Dealer)
 	go server.run()
 
 	router := mux.NewRouter()
